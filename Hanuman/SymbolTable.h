@@ -22,8 +22,8 @@ typedef struct symbol_table_entry {
 
 void addSymbol(char* label, int address);
 
-void solveUnresolvedSymbols(int* objectCode);
+void solveUnresolvedSymbols(short int* objectCode);
 
-void solveSymbol(char* label, int codePosition, int* objectCode);
+void solveSymbol(char* label, int codePosition, short int* objectCode);
 
 #endif

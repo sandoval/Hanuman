@@ -43,7 +43,7 @@ void addSymbol(char* label, int address) {
     }
 }
 
-void solveSymbol(char* label, int codePosition, int* objectCode) {
+void solveSymbol(char* label, int codePosition, short int* objectCode) {
     if (symbolList == NULL) {
         symbolList = initializeSymbol();
         symbolList->label = (char*)malloc((strlen(label)+1)*sizeof(char));
@@ -78,7 +78,7 @@ void solveSymbol(char* label, int codePosition, int* objectCode) {
     }
 }
 
-void solveUnresolvedSymbols(int* objectCode) {
+void solveUnresolvedSymbols(short int* objectCode) {
     register Symbol* currentSymbol = symbolList;
     while (currentSymbol != NULL) {
         if (currentSymbol->address == -1) {
