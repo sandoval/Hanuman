@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		358897D51735B9A200D8CDF2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 358897D41735B9A200D8CDF2 /* main.c */; };
+		353F425E174DBBB400271BDF /* main2.c in Sources */ = {isa = PBXBuildFile; fileRef = 353F425D174DBBB400271BDF /* main2.c */; };
+		353F4260174E4D1100271BDF /* SymbolTable.c in Sources */ = {isa = PBXBuildFile; fileRef = 353F425F174E4D1100271BDF /* SymbolTable.c */; };
+		353F4263174EECE400271BDF /* LexicalAnalyser.c in Sources */ = {isa = PBXBuildFile; fileRef = 353F4262174EECE400271BDF /* LexicalAnalyser.c */; };
 		358897D71735B9A200D8CDF2 /* Hanuman.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 358897D61735B9A200D8CDF2 /* Hanuman.1 */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		353F425D174DBBB400271BDF /* main2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main2.c; sourceTree = "<group>"; };
+		353F425F174E4D1100271BDF /* SymbolTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SymbolTable.c; sourceTree = "<group>"; };
+		353F4261174E4D1F00271BDF /* SymbolTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
+		353F4262174EECE400271BDF /* LexicalAnalyser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LexicalAnalyser.c; sourceTree = "<group>"; };
+		353F4264174EECEF00271BDF /* LexicalAnalyser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LexicalAnalyser.h; sourceTree = "<group>"; };
 		358897D11735B9A200D8CDF2 /* Hanuman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Hanuman; sourceTree = BUILT_PRODUCTS_DIR; };
 		358897D41735B9A200D8CDF2 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		358897D61735B9A200D8CDF2 /* Hanuman.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Hanuman.1; sourceTree = "<group>"; };
@@ -60,8 +67,13 @@
 		358897D31735B9A200D8CDF2 /* Hanuman */ = {
 			isa = PBXGroup;
 			children = (
+				353F425D174DBBB400271BDF /* main2.c */,
 				358897D41735B9A200D8CDF2 /* main.c */,
 				358897D61735B9A200D8CDF2 /* Hanuman.1 */,
+				353F425F174E4D1100271BDF /* SymbolTable.c */,
+				353F4261174E4D1F00271BDF /* SymbolTable.h */,
+				353F4262174EECE400271BDF /* LexicalAnalyser.c */,
+				353F4264174EECEF00271BDF /* LexicalAnalyser.h */,
 			);
 			path = Hanuman;
 			sourceTree = "<group>";
@@ -117,7 +129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				358897D51735B9A200D8CDF2 /* main.c in Sources */,
+				353F425E174DBBB400271BDF /* main2.c in Sources */,
+				353F4260174E4D1100271BDF /* SymbolTable.c in Sources */,
+				353F4263174EECE400271BDF /* LexicalAnalyser.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +230,7 @@
 				358897DC1735B9A200D8CDF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

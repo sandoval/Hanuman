@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 #define SOURCE_FILE_MAX_CHARS 100000
+#define MAX_LINE_LENGTH 10000
+#define MAX_LABEL_LENGTH 1000
+#define MAX_LABEL_TABLE 65536
 #define TESTMODE
 
 char* loadFileToMemory(const char* path);
@@ -45,8 +48,6 @@ int main(int argc, const char * argv[])
 
 #ifdef TESTMODE
         char* code = loadFileToMemory("/Users/sandoval/Desktop/Hanuman/Hanuman/teste.txt");
-        puts(code);
-
 #endif
 
     
@@ -55,15 +56,44 @@ int main(int argc, const char * argv[])
 
 }
 
+typedef struct line line;
+typedef struct label label;
+
+struct line {
+    label* label;
+    int sourceLine;
+    short int* content;
+};
+
+struct label {
+    char *identifier;
+    line* line;
+};
+
+label *labelTable[MAX_LABEL_TABLE];
+
 char* loadFileToMemory(const char* path) {
     FILE* fp = fopen(path, "r");
     char* code = (char*)malloc(sizeof(char)*SOURCE_FILE_MAX_CHARS);
+    char line[MAX_LINE_LENGTH] = "";
     register int c;
     register long position = 0;
     
     if (fp == NULL) {
         printf("ERRO: não foi possível abrir o arquivo para leitura!\n");
         exit(1);
+    }
+    
+    while (!feof(fp)) {
+        fgets(line, MAX_LINE_LENGTH, fp);
+        //Identification and extraction of labels
+        char *colonPos = strchr(line, ':');
+        if (colonPos != NULL) {
+            char* identifier = (char*)malloc(((colonPos-line)+1)*sizeof(char));
+            strncpy(identifier, line, colonPos-line);
+            identifier[colonPos-line] = '\0';
+        }
+        puts(line);
     }
     c = fgetc(fp);
     while (c != EOF) {
@@ -103,5 +133,39 @@ char* loadFileToMemory(const char* path) {
     
     fclose(fp);
     return code;
+}
+
+label* storeLabel(char* identifier) {
+    label* l = (label*)malloc(sizeof(label));
+    l->identifier = identifier;
+    int hash = hashString(identifier);
+    storeLabelWithHash(l, hash);
+    return l;
+}
+
+void storeLabelWithHash(label* l, int hash) {
+    if (labelTable[hash] == NULL) {
+        labelTable[hash] = l;
+    } else {
+        if (strcmp(labelTable[hash]->identifier, l->identifier) == 0) {
+            printf("Illegal redeclaration of identifier: %s", l->identifier);
+            exit(1);
+        } else {
+            storeLabelWithHash(l, incrementHash(hash));
+        }
+    }
+}
+
+int hashString(char* string) {
+    register long hash = 0;
+    for (register int i = 0; string[i] != '\0'; i++)
+        hash += string[i];
+    return hash%MAX_LABEL_TABLE;
+}
+
+int incrementHash(int hash) {
+    if (++hash >= MAX_LABEL_TABLE)
+        hash = 0;
+    return hash;
 }
 
