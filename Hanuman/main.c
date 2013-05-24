@@ -103,6 +103,7 @@ int main(int argc, const char * argv[])
     FILE* fp = fopen(argv[1], "r");
     char line[10000] = "";
     short int objectCode[65536];
+    register int stopAddress;
     register int lineNumber = 0;
     register int codePosition = 0;
     register int opcode = 0;
@@ -117,6 +118,7 @@ int main(int argc, const char * argv[])
         lineNumber++;
         fgets(line, 10000, fp);
         preprocessLine(line);
+        Symbol* lineSymbol = NULL;
         
         //Get first token
         tok = strtok(line, " \t\n");
@@ -125,7 +127,7 @@ int main(int argc, const char * argv[])
         //Get label if exists!
         if (tok[strlen(tok)-1] == ':') {
             tok[strlen(tok)-1] = '\0';
-            addSymbol(tok, codePosition);
+            lineSymbol = addSymbol(tok, codePosition);
             tok = strtok(NULL, " \t\n");
         }
         
@@ -142,29 +144,52 @@ int main(int argc, const char * argv[])
                 printf("Erro de sintaxe na linha %d. Esperando rotulo operando.\n", lineNumber);
                 exit(0);
             }
-            solveSymbol(tok, codePosition++, objectCode);
+            if (opcode == 4) {
+                solveSymbol(tok, codePosition++, objectCode)->cannotBeConstZero = 1;
+            } else if (opcode >= 5 && opcode <= 8) {
+                solveSymbol(tok, codePosition++, objectCode)->cannotBeData = 1;
+            } else if (opcode == 11) {
+                solveSymbol(tok, codePosition++, objectCode)->isWritten = 1;
+            } else {
+                solveSymbol(tok, codePosition++, objectCode);
+            }
             if (opcode == 9) {
                 tok = strtok(NULL, " \t\n,");
                 if (tok == NULL) {
                     printf("Erro de sintaxe na linha %d. Esperando rotulo operando.\n", lineNumber);
                     exit(0);
                 }
-                solveSymbol(tok, codePosition++, objectCode);
+                solveSymbol(tok, codePosition++, objectCode)->isWritten = 1;
             }
         } else if (opcode == 14) {
+            stopAddress = codePosition;
             objectCode[codePosition++] = opcode;
         } else if (opcode == 15) {
+            if (lineSymbol == NULL) {
+                printf("Erro de sintaxe: utilizacao de SPACE sem rotulo.\n");
+                exit(1);
+            }
             objectCode[codePosition++] = 0;
         } else {
+            if (lineSymbol == NULL) {
+                printf("Erro de sintaxe: utilizacao de CONST sem rotulo.\n");
+                exit(1);
+            }
+            lineSymbol->cannotBeWritten = 1;
             tok = strtok(NULL, " \t\n");
             if (tok == NULL) {
                 printf("Erro de sintaxe na linha %d. Esperando valor absoluto.\n", lineNumber);
                 exit(0);
             }
-            objectCode[codePosition++] = (int)strtol(tok, NULL, 0);
+            register int constant =  (int)strtol(tok, NULL, 0);
+            if (constant == 0) {
+                lineSymbol->isConstZero = 1;
+            }
+            objectCode[codePosition++] = constant;
         }
     }
     solveUnresolvedSymbols(objectCode);
+    verifyCodeConstraints(stopAddress);
     if (argc == 3) {
         saveOutput(objectCode, codePosition, argv[2]);
     } else {

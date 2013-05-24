@@ -18,12 +18,19 @@ typedef struct symbol_table_entry {
     int address;
     int lateBindingReference;
     struct symbol_table_entry* nextEntry;
+    int cannotBeData;
+    int cannotBeConstZero;
+    int isConstZero;
+    int cannotBeWritten;
+    int isWritten;
 } Symbol;
 
-void addSymbol(char* label, int address);
+Symbol* addSymbol(char* label, int address);
 
 void solveUnresolvedSymbols(short int* objectCode);
 
-void solveSymbol(char* label, int codePosition, short int* objectCode);
+Symbol* solveSymbol(char* label, int codePosition, short int* objectCode);
+
+void verifyCodeConstraints(int stopAddress);
 
 #endif
