@@ -66,10 +66,11 @@ const int opCodes[23] = {16, //0
 
 int translateOperationToken(char* token) {
     register int hash = hashString29(token);
+    register int i;
     if (strcmp(token, opTokens[hash]) == 0) {
         return opCodes[hash];
     }
-    for (register int i = hash+1; i<29; i++) {
+    for (i = hash+1; i<29; i++) {
         if (strcmp(token, opTokens[i]) == 0) {
             return opCodes[i];
         }
