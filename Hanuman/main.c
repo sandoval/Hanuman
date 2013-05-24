@@ -138,9 +138,17 @@ int main(int argc, const char * argv[])
         if (opcode < 14) {
             objectCode[codePosition++] = opcode;
             tok = strtok(NULL, " \t\n,");
+            if (tok == NULL) {
+                printf("Erro de sintaxe na linha %d. Esperando rotulo operando.\n", lineNumber);
+                exit(0);
+            }
             solveSymbol(tok, codePosition++, objectCode);
             if (opcode == 9) {
                 tok = strtok(NULL, " \t\n,");
+                if (tok == NULL) {
+                    printf("Erro de sintaxe na linha %d. Esperando rotulo operando.\n", lineNumber);
+                    exit(0);
+                }
                 solveSymbol(tok, codePosition++, objectCode);
             }
         } else if (opcode == 14) {
@@ -149,6 +157,10 @@ int main(int argc, const char * argv[])
             objectCode[codePosition++] = 0;
         } else {
             tok = strtok(NULL, " \t\n");
+            if (tok == NULL) {
+                printf("Erro de sintaxe na linha %d. Esperando valor absoluto.\n", lineNumber);
+                exit(0);
+            }
             objectCode[codePosition++] = (int)strtol(tok, NULL, 0);
         }
     }
