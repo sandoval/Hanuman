@@ -10,8 +10,10 @@
 
 Symbol* symbolList = NULL;
 Symbol* initializeSymbol();
+void validateSymbol(char* symbol);
 
 void addSymbol(char* label, int address) {
+    validateSymbol(label);
     if (symbolList == NULL) {
         //Lista de símbolos está vazia, basta adicionar.
         symbolList = initializeSymbol();
@@ -97,6 +99,22 @@ void solveUnresolvedSymbols(short int* objectCode) {
         currentSymbol = currentSymbol->nextEntry;
     }
 }
+
+void validateSymbol(char* symbol) {
+    register char* ch = symbol;
+    if (*symbol >= 48 && *symbol <= 57) {
+        printf("Rotulo invalido! Comeca com um numero: %s.\n", symbol);
+        exit(1);
+    }
+    while (*ch != '\0') {
+        if ((*ch < 48) || (*ch > 57 && *ch < 97) || (*ch > 122)) {
+            printf("Rotulo invalido! Contem caracter nao permitido: %s.\n", symbol);
+            exit(1);
+        }
+        ch++;
+    }
+}
+
 
 Symbol* initializeSymbol() {
     register Symbol* symbol = (Symbol*)malloc(sizeof(Symbol));
