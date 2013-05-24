@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		025172D81750099100039DD5 /* calculadoraAsm.asm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm.asm; path = calculadoraAsm.asm; sourceTree = "<group>"; };
 		353F425D174DBBB400271BDF /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		353F425F174E4D1100271BDF /* SymbolTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SymbolTable.c; sourceTree = "<group>"; };
 		353F4261174E4D1F00271BDF /* SymbolTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
@@ -47,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		025172D71750099100039DD5 /* teste */ = {
+			isa = PBXGroup;
+			children = (
+				025172D81750099100039DD5 /* calculadoraAsm.asm */,
+			);
+			path = teste;
+			sourceTree = "<group>";
+		};
 		358897C81735B9A200D8CDF2 = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +75,7 @@
 		358897D31735B9A200D8CDF2 /* Hanuman */ = {
 			isa = PBXGroup;
 			children = (
+				025172D71750099100039DD5 /* teste */,
 				353F425D174DBBB400271BDF /* main.c */,
 				358897D61735B9A200D8CDF2 /* Hanuman.1 */,
 				353F425F174E4D1100271BDF /* SymbolTable.c */,

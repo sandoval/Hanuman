@@ -84,7 +84,7 @@ void solveUnresolvedSymbols(short int* objectCode) {
     register Symbol* currentSymbol = symbolList;
     while (currentSymbol != NULL) {
         if (currentSymbol->address == -1) {
-            printf("ERRO! Ha referencia nao resolvida: %s", currentSymbol->label);
+            printf("ERRO! Ha referencia nao resolvida: %s\n", currentSymbol->label);
             exit(1);
         }
         if (currentSymbol->lateBindingReference != -1) {
@@ -107,7 +107,7 @@ void validateSymbol(char* symbol) {
         exit(1);
     }
     while (*ch != '\0') {
-        if ((*ch < 48) || (*ch > 57 && *ch < 97) || (*ch > 122)) {
+        if ((*ch < 48) || (*ch > 57 && *ch < 95) || (*ch > 95 && *ch < 97) || (*ch > 122)) {
             printf("Rotulo invalido! Contem caracter nao permitido: %s.\n", symbol);
             exit(1);
         }
